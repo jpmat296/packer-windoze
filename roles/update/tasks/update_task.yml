@@ -36,6 +36,8 @@
   win_updates:
     category_names:
     - '{{ category_info.name }}'
+    blacklist:
+    - KB4576630
     state: installed
     reboot: yes
   ignore_errors: yes # get intermittent errors with this, usually 2nd round succeeds so let's ignore it
