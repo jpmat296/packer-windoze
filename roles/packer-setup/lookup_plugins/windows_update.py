@@ -262,7 +262,7 @@ class WindowsUpdate:
             linkFound = False
             while not linkFound:
                 with urlopen('%s/DownloadDialog.aspx' % CATALOG_URL, data=data,
-                            headers=headers, timeout=120) as resp:
+                            headers=headers, timeout=1200) as resp:
                     resp_text = to_text(resp.read()).strip()
 
                 link_matches = re.findall(DOWNLOAD_PATTERN, resp_text)
@@ -289,7 +289,7 @@ class WindowsUpdate:
             bodyOK = False
             while not bodyOK:
                 with urlopen('%s/ScopedViewInline.aspx?updateid=%s' % (CATALOG_URL, str(self.id)),
-                            headers=headers, timeout=120) as resp:
+                            headers=headers, timeout=1200) as resp:
                     resp_text = to_text(resp.read()).lstrip()
                 self._details = BeautifulSoup(resp_text, 'html.parser')
 
