@@ -39,5 +39,5 @@
     dest: C:/Users/{{ sap_bip_installer_username }}/Desktop/bip_install
     creates: C:/Users/{{ sap_bip_installer_username }}/Desktop/bip_install/ProductId.txt
 - import_tasks: my_response_ini.yml
-# - import_tasks: setup.yml
-# - import_tasks: firewall.yml
+- import_tasks: setup.yml
+- import_tasks: firewall.yml
