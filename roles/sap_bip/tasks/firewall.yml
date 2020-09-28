@@ -1,0 +1,6 @@
+---
+- name: Firewall rule to allow BIP HTTP on port 8080
+  win_firewall_rule:
+    name: BIP HTTP
+    localport: '8080'
+    protocol: tcp

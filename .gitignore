@@ -13,6 +13,8 @@ hosts-*
 
 # Galaxy files
 roles/jborean93.*
+roles/jpmat296.*
+roles/informatiquecdc.win_pending_reboot
 
 # Temp Packer files
 2008-x86/

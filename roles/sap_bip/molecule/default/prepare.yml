@@ -1,0 +1,8 @@
+---
+- name: Prepare
+  hosts: all
+  roles:
+    - role: common_win
+    - role: jpmat296.upgrade-powershell
+  vars:
+    jpmat_password: TotoTiti1

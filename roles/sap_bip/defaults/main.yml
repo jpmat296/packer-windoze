@@ -1,0 +1,5 @@
+---
+# defaults file for sap_bip
+password: Password1!
+product_key: "{{ lookup('env', 'PRODUCT_KEY') }}"
+sap_bip_installer_username: Administrator

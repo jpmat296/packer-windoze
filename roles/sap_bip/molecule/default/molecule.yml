@@ -1,0 +1,36 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+# Env variable ANSIBLE_LIBRARY in to workaround issue ansible/ansible-lint#644
+lint: |
+  set -e
+  yamllint .
+  ANSIBLE_LIBRARY=${MOLECULE_EPHEMERAL_DIRECTORY}/roles/informatiquecdc.win_pending_reboot/library/\
+  :${MOLECULE_EPHEMERAL_DIRECTORY}/library/:${MOLECULE_PROJECT_DIRECTORY}/library/ ansible-lint
+platforms:
+  - name: vagrant-win2012r2
+    box: jpmat/WindowsServer2012R2
+    memory: 2048
+    instance_raw_config_args:
+      - "vm.network 'forwarded_port', guest: 8080, host: 8080"
+scenario:
+  name: default
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      vagrant-win2012r2:
+        ansible_user: vagrant
+        ansible_password: vagrant
+        ansible_port: 55986
+        ansible_host: 127.0.0.1
+        ansible_connection: winrm
+        ansible_winrm_transport: ntlm
+        ansible_winrm_scheme: https
+        ansible_winrm_server_cert_validation: ignore
+verifier:
+  name: ansible

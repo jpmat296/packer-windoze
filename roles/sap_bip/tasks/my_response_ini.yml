@@ -1,0 +1,5 @@
+---
+- name: Prepare my_response.ini file
+  win_template:
+    src: template/my_response.ini.j2
+    dest: C:/Users/{{ sap_bip_installer_username }}/Desktop/bip_install/my_response.ini

@@ -1,0 +1,43 @@
+---
+# tasks file for sap_bip
+- name: Workaround issue ansible-collections/community.windows#143
+  block:
+    - name: Check if NuGet is already installed
+      win_shell: |
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+        Get-PackageProvider -ListAvailable -Name Nuget
+      changed_when: false
+      failed_when: false
+      register: get_nuget_cmd
+    - name: Install NuGet
+      win_shell: |
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+        Find-PackageProvider -Name Nuget -ForceBootstrap -IncludeDependencies -Force
+      when: get_nuget_cmd.rc != 0
+- name: Ensure PSCX powershell module is installed for rar files
+  win_psmodule:
+    name: Pscx
+    allow_clobber: true
+- name: Ensure no reboot is pending
+  win_pending_reboot: {}
+  register: test_pending_reboot_result
+- name: reboot if need
+  win_reboot: {}
+  when: test_pending_reboot_result.reboot_required
+- name: Get BIP install files
+  win_get_url:
+    url: "{{ item }}"
+    username: anonymous
+    dest: C:/Users/{{ sap_bip_installer_username }}/Desktop/
+    force: false
+  loop:
+    - http://nas.matsusoft.com:5005/install_files/bo-bip/42_sp08_p200_one_win/BIPLATS4208P_200-80001044_P1.EXE
+    - http://nas.matsusoft.com:5005/install_files/bo-bip/42_sp08_p200_one_win/BIPLATS4208P_200-80001044_P2.RAR
+- name: Decompress BIP install files  # 30 mins
+  win_unzip:
+    src: C:/Users/{{ sap_bip_installer_username }}/Desktop/BIPLATS4208P_200-80001044_P1.exe
+    dest: C:/Users/{{ sap_bip_installer_username }}/Desktop/bip_install
+    creates: C:/Users/{{ sap_bip_installer_username }}/Desktop/bip_install/ProductId.txt
+- import_tasks: my_response_ini.yml
+# - import_tasks: setup.yml
+# - import_tasks: firewall.yml

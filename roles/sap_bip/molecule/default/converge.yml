@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: sap_bip
+  vars:
+    sap_bip_installer_username: vagrant

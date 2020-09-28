@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  author: Jean-Pierre
+  description: Ansible role to install SAP BO BI Platform
+
+  license: BSD-3-Clause
+
+  min_ansible_version: 2.9
+
+  platforms:
+    - name:
+      versions:
+        - 2012R2
+
+  galaxy_tags: []
+
+dependencies:
+  - role: informatiquecdc.win_pending_reboot

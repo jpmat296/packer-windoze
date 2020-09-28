@@ -1,0 +1,23 @@
+---
+- name: Execute BIP installer
+  win_command: setup -r my_response.ini
+  args:
+    chdir: C:/Users/{{ sap_bip_installer_username }}/Desktop/bip_install
+    creates: C:/Program Files (x86)/SAP BusinessObjects/InstallData
+- name: Find installer log directory
+  block:
+    - name: Find installer log directory (list)
+      win_find:
+        file_type: directory
+        paths: C:\Program Files (x86)\SAP BusinessObjects\InstallData\logs\
+      register: found_dirs
+    - name: Find installer log directory (latest)
+      set_fact:
+        log_dir: "{{ found_dirs.files | sort(attribute='mtime',reverse=true) | first }}"
+- name: Ensure no error have occurred
+  win_lineinfile:
+    path: "{{ log_dir }}\\ErrorsAndWarnings.log"
+    line: 'No errors are encountered '
+  check_mode: true
+  register: presence
+  failed_when: presence.changed
