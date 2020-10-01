@@ -3,6 +3,6 @@
   hosts: all
   roles:
     - role: common_win
-    - role: jpmat296.upgrade-powershell
+    - role: jpmat296.upgrade_powershell
   vars:
     jpmat_password: TotoTiti1

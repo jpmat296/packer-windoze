@@ -1,6 +1,4 @@
 ---
 roles:
-  - name: informatiquecdc.win_pending_reboot
-    src: informatiquecdc.win_pending_reboot
-  - name: jpmat296.upgrade-powershell
-    src: https://github.com/jpmat296/ansible-upgrade-powershell
+  - informatiquecdc.win_pending_reboot
+  - jpmat296.upgrade_powershell

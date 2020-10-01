@@ -1,6 +1,6 @@
 ---
 - name: Execute BIP installer
-  win_command: setup -r my_response.ini
+  win_command: setup.exe -r my_response.ini
   args:
     chdir: C:/Users/{{ sap_bip_installer_username }}/Desktop/bip_install
     creates: C:/Program Files (x86)/SAP BusinessObjects/InstallData

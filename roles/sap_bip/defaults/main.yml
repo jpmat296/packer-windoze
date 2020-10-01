@@ -1,5 +1,11 @@
 ---
 # defaults file for sap_bip
+sap_bip_install_urls:
+  # yamllint disable rule:line-length
+  - http://nas.matsusoft.com:5005/install_files/bo-bip/42_sp08_p500_one_win/BIPLATS4208P_500-80001044_P1.EXE
+  - http://nas.matsusoft.com:5005/install_files/bo-bip/42_sp08_p500_one_win/BIPLATS4208P_500-80001044_P2.RAR
+  # yamllint disable rule:line-length
 password: Password1!
 product_key: "{{ lookup('env', 'PRODUCT_KEY') }}"
 sap_bip_installer_username: Administrator
+sap_bip_sia_name: "{{ inventory_hostname_short }}"  # Can be improved

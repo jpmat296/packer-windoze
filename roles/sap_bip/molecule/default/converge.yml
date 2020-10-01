@@ -5,3 +5,4 @@
     - role: sap_bip
   vars:
     sap_bip_installer_username: vagrant
+    sap_bip_sia_name: VAGRANTWIN2012
