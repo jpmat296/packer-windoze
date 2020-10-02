@@ -104,7 +104,7 @@ pri_packer_setup_builders_info:
       # need to double escape the Jinja2 {{.Name}} value so Ansible doesn't see it as a variable
       - "{% raw %}{{ '{{' }}.Name{{ '}}' }}{% endraw %}"
       - --memory
-      - "2048"
+      - "6144"
     -
       - modifyvm
       - "{% raw %}{{ '{{' }}.Name{{ '}}' }}{% endraw %}"
