@@ -34,6 +34,7 @@
   - role: jpmat296.upgrade-powershell
   - role: sap_bip
     sap_bip_installer_username: vagrant
+    sap_bip_sia_name: SIA1
   - cleanup-winsxs
   - cleanup-features
   - cleanup
