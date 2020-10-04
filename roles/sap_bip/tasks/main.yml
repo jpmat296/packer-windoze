@@ -9,6 +9,7 @@
       changed_when: false
       failed_when: false
       register: get_nuget_cmd
+      check_mode: false
     - name: Install NuGet
       win_shell: |
         [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
@@ -39,3 +40,4 @@
 - import_tasks: my_response_ini.yml
 - import_tasks: setup.yml
 - import_tasks: firewall.yml
+- import_tasks: services.yml

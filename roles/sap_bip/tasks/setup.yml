@@ -14,6 +14,7 @@
     - name: Find installer log directory (latest)
       set_fact:
         log_dir: "{{ found_dirs.files | sort(attribute='mtime',reverse=true) | first }}"
+      when: not ansible_check_mode
 - name: Ensure no error have occurred
   win_lineinfile:
     path: "{{ log_dir }}\\ErrorsAndWarnings.log"
@@ -21,3 +22,4 @@
   check_mode: true
   register: presence
   failed_when: presence.changed
+  when: not ansible_check_mode

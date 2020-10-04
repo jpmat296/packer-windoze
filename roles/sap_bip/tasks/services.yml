@@ -1,0 +1,11 @@
+---
+- name: Ensure BIP services are stopped
+  win_service:
+    name: "{{ item }}"
+    state: stopped
+  with_items:
+    - BOEXI40Tomcat
+    - BOEXI40AutomationFramework
+    - BOEXI40Agent
+    - BOEXI40BWPublisherService
+    - BOEXI40SIA{{ sap_bip_sia_name }}
