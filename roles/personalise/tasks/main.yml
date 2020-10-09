@@ -1,4 +1,11 @@
 ---
+- name: Force hostname vagranthost
+  win_hostname:
+    name: vagranthost
+  register: hn_changed
+- name: Reboot if hostname has changed
+  win_reboot: {}
+  when: hn_changed.reboot_required
 - name: install and enable TLSv1.2 for Server 2008 and 2008 R2
   block:
   - name: enable TLSv1.2 support for Server 2008 and 2008 R2
