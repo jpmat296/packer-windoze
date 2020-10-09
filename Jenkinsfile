@@ -2,11 +2,11 @@ import org.jenkinsci.plugins.workflow.steps.FlowInterruptedException
 
 stage('root') {
   try {
-    parallel w2012r2: {
-      stage('2012r2') {
+    parallel w2016: {
+      stage('2016') {
         node('packer') {
            sleep 1
-           executePackerType('2012r2')
+           executePackerType('2016')
         }
       }
     }
