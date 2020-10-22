@@ -27,8 +27,8 @@ class FilterModule:
         else:
             matched_urls = [d.url for d in download_urls]
 
-        if len(matched_urls) != 1:
-            raise ValueError("Expecting only 1 download link for '%s' but found %d" % (str(update), len(matched_urls)))
+        # if len(matched_urls) != 1:
+        #     raise ValueError("Expecting only 1 download link for '%s' but found %d" % (str(update), len(matched_urls)))
 
         update_info = {
             'title': update.title,
