@@ -1,24 +1,5 @@
 ---
 # tasks file for sap_bip
-- name: Workaround issue ansible-collections/community.windows#143
-  block:
-    - name: Check if NuGet is already installed
-      win_shell: |
-        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-        Get-PackageProvider -ListAvailable -Name Nuget
-      changed_when: false
-      failed_when: false
-      register: get_nuget_cmd
-      check_mode: false
-    - name: Install NuGet
-      win_shell: |
-        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-        Find-PackageProvider -Name Nuget -ForceBootstrap -IncludeDependencies -Force
-      when: get_nuget_cmd.rc != 0
-- name: Ensure PSCX powershell module is installed for rar files
-  win_psmodule:
-    name: Pscx
-    allow_clobber: true
 - name: Ensure no reboot is pending
   win_pending_reboot: {}
   register: test_pending_reboot_result
@@ -31,12 +12,18 @@
     username: anonymous
     dest: C:/Users/{{ sap_bip_installer_username }}/Desktop/
     force: false
+  async: 900
   loop: "{{ sap_bip_install_urls }}"
-- name: Decompress BIP install files  # 30 mins
-  win_unzip:
-    src: C:/Users/{{ sap_bip_installer_username }}/Desktop/{{ sap_bip_install_urls[0] | basename }}
-    dest: C:/Users/{{ sap_bip_installer_username }}/Desktop/bip_install
+- name: Install winrar
+  win_chocolatey:
+    name: winrar
+- name: Decompress BIP install files with winrar
+  win_command: |
+    "C:\Program Files\WinRAR\unrar" x -idq {{ sap_bip_install_urls[0] | basename }} bip_install/
+  args:
+    chdir: C:/Users/{{ sap_bip_installer_username }}/Desktop
     creates: C:/Users/{{ sap_bip_installer_username }}/Desktop/bip_install/ProductId.txt
+  async: 1500
 - import_tasks: my_response_ini.yml
 - import_tasks: setup.yml
 - import_tasks: firewall.yml

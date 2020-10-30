@@ -1,4 +1,0 @@
----
-roles:
-  - informatiquecdc.win_pending_reboot
-  - jpmat296.upgrade_powershell
