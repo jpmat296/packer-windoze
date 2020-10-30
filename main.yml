@@ -23,6 +23,13 @@
       name: winrm
       start_mode: auto
 
+  # This is required for BIP login from Tomcat using VAGRANTHOST:6400 which is the default
+  - name: Add hosts file entry for hostname VAGRANTHOST
+    win_hosts:
+      action: add
+      ip_address: 127.0.0.1
+      canonical_name: VAGRANTHOST
+
   roles:
   - update
   - personalise
